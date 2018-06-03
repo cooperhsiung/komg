@@ -1,7 +1,6 @@
 const { Router } = require('express');
 const router = Router();
 const _ = require('lodash');
-let config = require('../load-config');
 const Api = require('../services/model');
 let store = require('../services/local').store;
 
@@ -38,7 +37,6 @@ router.post('/save', (req, res, next) => {
       merge(api, req.body);
     }
     ret = await api.save();
-    // Object.assign(_.find(config, e => e.name === name), req.body);
     res.json(ret);
   })().catch(err => {
     res.json(err);
