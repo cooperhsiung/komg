@@ -1,0 +1,138 @@
+@font-face {
+    font-family: 'avenirltstd-roman';
+    src: url('../font/AvenirLTStd Roman.otf');
+}
+
+html {
+    font-size: 16px;
+}
+
+body {
+    /*font-size: 22px;*/
+    background-color: #F0F2F5;
+}
+
+
+h2 {
+    margin-top: 50px;
+    text-align: center;
+}
+
+span {
+    font-family: avenirltstd-roman, serif;
+    margin-right: 20px;
+    color: #2A3F54;
+}
+
+nav {
+    text-align: center;
+}
+
+#content {
+    width: 75%;
+    margin: 30px auto 50px auto;
+    padding-left: 0;
+}
+
+li {
+    list-style: none;
+}
+
+li > div {
+    padding: 5px 0;
+}
+
+.api {
+    padding: 20px;
+    margin-bottom: 30px;
+    background-color: #fff;
+    box-shadow: 2px 2px 2px #ccc;
+}
+
+input {
+    font-size: 1rem;
+    border: none;
+    border-bottom: 1px solid #a9a9a9;
+    margin-right: 20px;
+}
+
+input:focus {
+    outline: none;
+    border-bottom: 1px solid #39f;
+}
+
+.label {
+    display: inline-block;
+    width: 100px;
+    text-align: right;
+}
+
+.api ul {
+    padding-left: 120px;
+}
+
+.api li {
+    padding: 5px 0;
+}
+
+.api input[type="text"]:nth-child(1), .api input[type="text"]:nth-child(2) {
+    width: 100px;
+}
+
+.api > div:nth-child(5) > input[type="text"] {
+    width: 50px;
+    text-align: center;
+}
+
+.api li input[type="text"]:nth-child(1) {
+    width: 180px;
+}
+
+.api li input[type="text"]:nth-child(2) {
+    width: 50px;
+    text-align: center;
+}
+
+.api li span:nth-child(1) {
+    display: inline-block;
+    width: 180px;
+}
+
+.add {
+    text-align: center;
+    font-size: 72px;
+}
+
+.handle {
+    position: fixed;
+    top: 150px;
+    right: 40px;
+    width: 80px;
+    height: 80px;
+    background-color: #fff;
+    padding: 10px;
+}
+
+button {
+    display: block;
+    border: solid #3399ff 1px;
+    /*border-radius: 3px;*/
+    width: 50px;
+    height: 30px;
+    margin: 10px auto;
+    background-color: #fff;
+}
+
+button:hover {
+    /*border: solid #ccc 1px;*/
+    color: #fff;
+    background-color: #3399ff;
+}
+
+button:focus {
+    outline: none;
+}
+
+
+
+.name,.path{}

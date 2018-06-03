@@ -1,0 +1,56 @@
+doctype html
+html
+    head
+        meta(charset='utf-8')
+        title admin
+        link(rel='stylesheet', href='/css/main.css')
+        link(rel='stylesheet', href='/css/col.css')
+    body
+
+
+        header
+            h2 hello admin
+            nav(class='tool-bar')
+                span save all
+                span expand all
+                span reload all
+        div(id='content')
+            ul(class='cont')
+            each api in data
+                li(class='api')
+                    div(class='base')
+                        div(class='name')
+                            span(class='label') Name:
+                            input(old=api.name,value=api.name,type='text')
+                        div(class='path')
+                            span(class='label') Path:
+                            input(old=api.url,value=api.url, type='text')
+                        button(class='collapsible') +
+                    div(class='content')
+                        div(class='targets')
+                            span(class='label') Targets:
+                            ul
+                                li
+                                    span url
+                                    span weight
+                                each target in api.targets
+                                    li
+                                        input(old=target.address,value=target.address, type='text')
+                                        input(value=target.weight, type='text')
+                        div(class='consumers')
+                            span(class='label') Consumers:
+                            ul
+                                each consumer in api.consumers
+                                    li
+                                        input(value=consumer, type='text')
+                        div(class='order')
+                            span(class='label') Order:
+                            input(value=api.order, type='text')
+            li(class='api add')
+                p +
+
+        footer
+            copyright
+
+        script(src='/js/jquery-3.3.1.min.js')
+        script(src='/js/main.js')
