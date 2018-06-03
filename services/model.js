@@ -3,42 +3,100 @@
  */
 const mongoose = require('mongoose');
 mongoose.connect('mongodb://127.0.0.1:27017/komg');
+const Schema = mongoose.Schema;
 
-var Schema = mongoose.Schema;
+const targetSchema = new Schema(
+  {
+    url: {
+      type: String,
+      validate: {
+        validator: function(v) {
+          return /^http(s|):\/\/\S+/.test(v);
+        },
+        message: '{VALUE} is not a required url!',
+      },
+      required: true,
+    },
+    weight: { type: Number, required: true },
+    status: {
+      type: Number,
+      validate: {
+        validator: function(v) {
+          return /[1|0|\-1]/.test(v);
+        },
+        message: '{VALUE} is not a required status!',
+      },
+      required: true,
+    },
+  },
+  { _id: false },
+);
 
-var apiSchema = new Schema(
+const consumerSchema = new Schema(
+  {
+    apikey: { type: String, required: true },
+    status: {
+      type: Number,
+      validate: {
+        validator: function(v) {
+          return /[1|0|\-1]/.test(v);
+        },
+        message: '{VALUE} is not a required status!',
+      },
+      required: true,
+    },
+  },
+  { _id: false },
+);
+
+const apiSchema = new Schema(
   {
     _id: String,
     name: { type: String, required: true },
-    path: { type: String, required: true },
-    targets: { type: [{ url: String, weight: Number, status: Number, _id: false }], required: true },
-    consumers: { type: [{ apikey: String, status: Number, _id: false }], required: true },
+    path: {
+      type: String,
+      validate: {
+        validator: function(v) {
+          return /^\/\S/.test(v);
+        },
+        message: '{VALUE} is not a required path!',
+      },
+      required: true,
+    },
+    targets: { type: [targetSchema], required: true },
+    consumers: { type: [consumerSchema], required: true },
     order: { type: Number, required: true },
   },
   { _id: false, collection: 'apis' },
 );
 
-// apiSchema.index({ name: 1});
+const db = require('./local').db;
+apiSchema.post('save', api => {
+  console.log('========= save');
+  let exist = db
+    .get('komg')
+    .find({ _id: api._id })
+    .value();
+  console.log(!!exist);
+  if (exist) {
+    db
+      .get('komg')
+      .find({ _id: api._id })
+      .assign(api.toObject())
+      .write();
+  } else {
+    db
+      .get('komg')
+      .push(api)
+      .write();
+  }
+});
 
-var Api = mongoose.model('Api', apiSchema);
+apiSchema.post('remove', api => {
+  db
+    .get('komg')
+    .remove({ _id: api._id })
+    .write();
+});
 
-module.exports = Api;
-
-// Api.find()
-// .then(ret => {
-//     console.log(ret);
-// })
-// .catch(err => {
-//     console.log(err);
-// })
-
-// const kitty = new Api({_id: 'test', name: 'test', path: '/test', order: 8});
-//
-// kitty
-//   .save()
-//   .then(ret => {
-//     console.log(ret);
-//   })
-//   .catch(err => {
-//     console.log(err);
-//   });
+module.exports = mongoose.model('Api', apiSchema);

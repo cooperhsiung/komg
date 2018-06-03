@@ -2,86 +2,90 @@ const { Router } = require('express');
 const router = Router();
 const _ = require('lodash');
 let config = require('../load-config');
-// const mongoClient = require('../services/mongo_client');
-
 const Api = require('../services/model');
+let store = require('../services/local').store;
+
+console.log('===', store, '====');
 
 router.get('/', (req, res, next) => {
-  Api.find()
-    .then(ret => {
-      console.log(ret);
-      res.render('index', { title: 'Hey', data: ret });
-    })
-    .catch(err => {
-      console.log(err);
-    });
-});
-
-router.get('/t', (req, res, next) => {
-  Api.find()
-    .then(ret => {
-      // console.log(ret);
-      res.render('index2', { title: 'Hey', data: ret });
-    })
-    .catch(err => {
-      console.log(err);
-    });
-  // mongoClient
-  //   .find({}, 'gw')
-  //   .then(ret => {
-  //     console.log(ret);
-  //     res.render('index2', { title: 'Hey', data: ret });
-  //   })
-  //   .catch(err => {
-  //     console.log(err);
-  //   });
+  (async () => {
+    let ret = await Api.find();
+    res.render('index', { title: 'Hey', data: ret });
+  })().catch(err => {
+    res.json(err);
+  });
 });
 
 router.get('/query', (req, res, next) => {
-  mongoClient
-    .findOne({ name: req.query.name }, 'gw')
-    .then(ret => {
-      res.json(ret);
-    })
-    .catch(err => {
-      res.json(err);
-    });
-});
-
-router.post('/update', (req, res, next) => {
-  const name = req.body.name || req.query.name;
-  Object.assign(_.find(config, e => e.name === name), req.body);
-  Api.updateOne({ _id: name }, req.body, { upsert: true });
-  res.send('ok');
+  (async () => {
+    if (typeof store.then === 'function') {
+      console.log('========= await');
+      store = await store;
+    }
+    res.send(store);
+  })().catch(err => {
+    res.json(err);
+  });
 });
 
 router.post('/save', (req, res, next) => {
-  const name = req.body.name || req.query.name;
-  // Object.assign(_.find(config, e => e.name === name), req.body);
-  console.log('========= req.body', req.body);
+  (async () => {
+    let api = await Api.findOne({ _id: req.body.name });
+    let ret;
+    if (!api) {
+      ret = await Api.create(Object.assign({ _id: req.body.name }, req.body));
+    } else {
+      merge(api, req.body);
+    }
+    ret = await api.save();
+    // Object.assign(_.find(config, e => e.name === name), req.body);
+    res.json(ret);
+  })().catch(err => {
+    res.json(err);
+  });
+  // for validation when upsert
+  function merge(api, body) {
+    api.name = body.name;
+    api.path = body.path;
+    api.targets = body.targets;
+    api.consumers = body.consumers;
+    api.order = body.order;
+  }
+});
 
-  // res.json({ msg: 'ok' });
-  Api.updateOne({ _id: name }, req.body, { upsert: true })
-    .then(ret => {
-      res.json(ret);
-    })
-    .catch(err => {
-      res.json(err);
-    });
+router.post('/reload', (req, res, next) => {
+  (async () => {
+    const name = req.query.name || req.body.name;
+    if (name === 'all') {
+      store = await Api.find();
+    } else {
+      const api = await Api.findOne({ _id: req.body.name });
+      const exist = _.find(store, e => e.name === req.body.name);
+      if (exist) {
+        Object.assign(exist, api || {});
+      } else if (api) {
+        store.push(api);
+      }
+    }
+    console.log('========= store', store);
+    res.send('ok');
+  })().catch(err => {
+    res.json({ msg: err.message || err });
+  });
 });
 
 router.post('/remove', (req, res, next) => {
-  const name = req.body.name || req.query.name;
-  console.log(name);
-  res.send('ok')
-  // Object.assign(_.find(config, e => e.name === name), req.body);
-  // Api.deleteOne({ _id: name })
-  //   .then(ret => {
-  //     res.json(ret);
-  //   })
-  //   .catch(err => {
-  //     res.json(err);
-  //   });
+  (async () => {
+    let api = await Api.findOne({ _id: req.body.name });
+    if (api) {
+      api.remove();
+    }
+    _.remove(store, e => e.name === req.body.name);
+    console.log('========= store', store);
+    res.json('ok');
+  })().catch(err => {
+    res.json(err);
+  });
 });
 
 module.exports = router;

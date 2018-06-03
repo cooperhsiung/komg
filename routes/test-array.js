@@ -14,7 +14,7 @@ try {
 
 console.log(_.sample([]));
 
-_.find(arr, e => e.name === 'a').a = 'asd'
+_.find(arr, e => e.name === 'a').a = 'asd';
 
 console.log(arr);
 
@@ -23,3 +23,9 @@ console.log(arr);
 // _.chain(arr).find(e=>e.name==='a').value().find(e=>e.sleep===1).value().run=2
 
 // console.log(arr);
+
+console.log(/^http(s|):\/\/\S+/.test('http://localhost:3002'));
+
+console.log(/^\/\S/.test('//localhost:3002'));
+
+console.log(/[1|0|\-1]/.test(0));

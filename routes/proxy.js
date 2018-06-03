@@ -7,7 +7,7 @@ const router = Router();
 const httpProxy = require('http-proxy');
 const proxy = httpProxy.createProxyServer({});
 
-let config = require('../load-config');
+let store = require('../services/local').store;
 
 proxy.on('proxyReq', (proxyReq, req, res, options) => {
   if (req.body) {
@@ -18,11 +18,11 @@ proxy.on('proxyReq', (proxyReq, req, res, options) => {
   }
 });
 
-proxy.on('error', (err, req, res) => {
+proxy.on('error', async (err, req, res) => {
   try {
     if (req.headers['x-name'] !== 'root') {
       _.find(
-        _.find(config, e => e.name === req.headers['x-name']).targets,
+        _.find(store, e => e.name === req.headers['x-name']).targets,
         e => e.address === req.headers['x-target'],
       ).weight = 0;
     }
@@ -37,11 +37,11 @@ proxy.on('error', (err, req, res) => {
 });
 
 let env = 'dev';
-// console.log(_.sortBy(config,e=>e.order));
+// console.log(_.sortBy(store,e=>e.order));
 
-_.sortBy(config, e => -e.order).forEach(api => {
+_.sortBy(store, e => -e.order).forEach(api => {
   // console.log(api);
-  router.use(api.url, (req, res) => {
+  router.use(api.path, (req, res) => {
     // let stime = Date.now();
     // console.log('========= stime', stime);
     if (
@@ -51,7 +51,7 @@ _.sortBy(config, e => -e.order).forEach(api => {
     ) {
       let item = _.sample(_.filter(api.targets, e => e.weight > 0));
       if (item) {
-        let target = item.address;
+        let target = item.url;
         // let target = api.targets[0].address
         // console.log('========= api', api);
         console.log('--name--', api.name);

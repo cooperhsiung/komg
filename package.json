@@ -26,6 +26,7 @@
     "express": "^4.16.3",
     "http-proxy": "^1.17.0",
     "lodash": "^4.17.10",
+    "lowdb": "^1.0.0",
     "marked": "^0.3.19",
     "mongodb": "^3.0.8",
     "mongoose": "^5.1.3",
