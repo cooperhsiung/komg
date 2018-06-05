@@ -3,7 +3,7 @@ const router = Router();
 const _ = require('lodash');
 let { store, db, schema } = require('../services/local');
 const cjv = require('cjv');
-console.log('========= init store', store);
+console.log('========= init store\n', store);
 
 router.get('/', (req, res, next) => {
   try {

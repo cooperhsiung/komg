@@ -5,8 +5,8 @@ const low = require('lowdb');
 const FileSync = require('lowdb/adapters/FileSync');
 const path = require('path');
 const adapter = new FileSync(path.resolve(__dirname, 'db.json'));
-const db = low(adapter);
-let store = db.get('komg').value();
+const db = low(adapter).get('komg');
+let store = db.value();
 
 const schema = {
   name: { type: 'string' },
@@ -28,7 +28,7 @@ const schema = {
 };
 
 module.exports.store = store;
-module.exports.db = db.get('komg');
+module.exports.db = db;
 module.exports.schema = schema;
 
 // default set

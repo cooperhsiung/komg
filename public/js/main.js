@@ -6,17 +6,6 @@ $(function() {
   $('#sortable').sortable();
   $('#sortable').disableSelection();
 
-  // collapse direction class
-  // $('button[data-toggle="collapse"]').click(function() {
-  //   if ($(this).hasClass('glyphicon-chevron-up')) {
-  //     $(this).removeClass('glyphicon-chevron-up');
-  //     $(this).addClass('glyphicon-chevron-down');
-  //   } else {
-  //     $(this).removeClass('glyphicon-chevron-down');
-  //     $(this).addClass('glyphicon-chevron-up');
-  //   }
-  // });
-
   // collapse/expand all
   $('.glyphicon-fullscreen').click(function() {
     $(this).toggleClass('active');
@@ -33,7 +22,7 @@ $(function() {
   });
 
   //all reload click
-  $('.navbar .glyphicon-refresh').click(function() {
+  $('.node .glyphicon-refresh').click(function() {
     $.ajax({
       type: 'post',
       dataType: 'json',
@@ -47,7 +36,7 @@ $(function() {
   });
 
   // all save click
-  $('.navbar .glyphicon-inbox').click(function() {
+  $('.node .glyphicon-inbox').click(function() {
     $('.api').each(function() {
       if ($(this).hasClass('unsaved')) {
         saveApi($(this));
@@ -81,8 +70,10 @@ $(function() {
   });
 });
 
+let $main = $('.main');
+
 // input editable toggle
-$('.main').on('click', '.glyphicon-pencil', function() {
+$main.on('click', '.glyphicon-pencil', function() {
   const $api = $(this).closest('.api');
   $(this).toggleClass('active');
   if ($(this).hasClass('active')) {
@@ -101,7 +92,7 @@ $('.main').on('click', '.glyphicon-pencil', function() {
   }
 });
 
-$('.main').on('click', '.glyphicon-inbox', function() {
+$main.on('click', '.glyphicon-inbox', function() {
   const $api = $(this).closest('.api');
   saveApi($api);
 });
@@ -171,7 +162,7 @@ function saveApi($api) {
   });
 }
 
-$('.main').on('click', '.glyphicon-refresh', function() {
+$main.on('click', '.glyphicon-refresh', function() {
   // console.log('========= yes');
   let $api = $(this).closest('.api');
   let name = $api.find('.name b').text() || $api.find('.name input').val();
@@ -187,7 +178,7 @@ $('.main').on('click', '.glyphicon-refresh', function() {
   });
 });
 
-$('.main').on('click', '.targets .glyphicon-plus-sign', function() {
+$main.on('click', '.targets .glyphicon-plus-sign', function() {
   const $api = $(this).closest('.api');
   $api.addClass('unsaved');
   const $ul = $(this).closest('ul');
@@ -196,7 +187,7 @@ $('.main').on('click', '.targets .glyphicon-plus-sign', function() {
   );
 });
 
-$('.main').on('click', '.consumers .glyphicon-plus-sign', function() {
+$main.on('click', '.consumers .glyphicon-plus-sign', function() {
   const $api = $(this).closest('.api');
   $api.addClass('unsaved');
   const $ul = $(this).closest('ul');
@@ -205,7 +196,7 @@ $('.main').on('click', '.consumers .glyphicon-plus-sign', function() {
   );
 });
 
-$('.main').on('click', '.col-md-1.glyphicon-minus-sign', function() {
+$main.on('click', '.col-md-1.glyphicon-minus-sign', function() {
   const $api = $(this).closest('.api');
   $api.addClass('unsaved');
   $(this)
@@ -213,7 +204,7 @@ $('.main').on('click', '.col-md-1.glyphicon-minus-sign', function() {
     .remove();
 });
 
-$('.main').on('click', '.remove', function() {
+$main.on('click', '.remove', function() {
   let r = confirm('delete?');
   if (r) {
     // console.log('========= yes');
@@ -233,7 +224,7 @@ $('.main').on('click', '.remove', function() {
   }
 });
 
-$('.main').on('click', 'button[data-toggle="collapse"]', function() {
+$main.on('click', 'button[data-toggle="collapse"]', function() {
   const $api = $(this).closest('.api');
   var clps = $api.find('button[data-toggle="collapse"]');
   if (clps.hasClass('glyphicon-chevron-down')) {
@@ -257,13 +248,13 @@ $(window).bind('beforeunload', function() {
   }
 });
 
-$('.main').on('input', ':input', function() {
+$main.on('input', ':input', function() {
   const $api = $(this).closest('.api');
   $api.addClass('unsaved');
 });
 
 // validation
-$('.main').on('change', '.order input', function() {
+$main.on('change', '.order input', function() {
   if (!/\d+/.test($(this).val())) {
     $(this).addClass('error');
   } else {
@@ -271,7 +262,7 @@ $('.main').on('change', '.order input', function() {
   }
 });
 
-$('.main').on('change', '.path input', function() {
+$main.on('change', '.path input', function() {
   if (!/^\/\S/.test($(this).val())) {
     $(this).addClass('error');
   } else {
@@ -279,7 +270,7 @@ $('.main').on('change', '.path input', function() {
   }
 });
 
-$('.main').on('change', '.targets .col-md-5', function() {
+$main.on('change', '.targets .col-md-5', function() {
   if (!/^http(s|):\/\/\S+/.test($(this).val())) {
     $(this).addClass('error');
   } else {
@@ -287,7 +278,7 @@ $('.main').on('change', '.targets .col-md-5', function() {
   }
 });
 
-$('.main').on('input', 'select', function() {
+$main.on('input', 'select', function() {
   let v = $(this).val();
   if (v == 1) {
     $(this).addClass('good');

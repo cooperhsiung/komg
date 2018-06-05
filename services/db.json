@@ -48,7 +48,7 @@
     },
     {
       "name": "test3",
-      "path": "/test3",
+      "path": "/test3d",
       "targets": [
         {
           "url": "http://localhost:3002",
@@ -65,37 +65,23 @@
       "order": 2
     },
     {
-      "name": "test5",
-      "path": "/test5",
-      "targets": [
-        {
-          "url": "http://localhost:3002",
-          "weight": 2,
-          "status": 0
-        }
-      ],
-      "consumers": [
-        {
-          "apikey": "ertwertwert",
-          "status": 1
-        }
-      ],
-      "order": 2
-    },
-    {
-      "name": "test6",
-      "path": "/test6",
+      "name": "test4",
+      "path": "/test4",
       "targets": [
         {
           "url": "https://localhost:3002",
-          "weight": 2,
+          "weight": 1,
           "status": 1
         }
       ],
       "consumers": [
         {
-          "apikey": "dsgdfgsdfg",
+          "apikey": "wqerweert",
           "status": 1
+        },
+        {
+          "apikey": "sfsdfasdfadf",
+          "status": 0
         }
       ],
       "order": 2
