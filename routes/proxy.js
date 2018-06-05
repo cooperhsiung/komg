@@ -41,6 +41,8 @@ let env = process.env.NODE_ENV || 'dev';
 // console.log(_.sortBy(store,e=>e.order));
 
 router.use('/:path', (req, res, next) => {
+
+  //TODO quick find
   for (const api of store) {
     console.log('========= name\n', api.name);
     if (api.name === req.params.path) {
