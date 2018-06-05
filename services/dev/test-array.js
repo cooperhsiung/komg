@@ -29,3 +29,13 @@ console.log(/^http(s|):\/\/\S+/.test('http://localhost:3002'));
 console.log(/^\/\S/.test('//localhost:3002'));
 
 console.log(/[1|0|\-1]/.test(0));
+
+let l  =[1,22,3,34]
+
+_.sortBy(l,e=>-e)
+
+l.sort(function(a, b) {
+  return a - b;
+});
+
+console.log(l)

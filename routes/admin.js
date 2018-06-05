@@ -55,6 +55,7 @@ router.post('/reload', (req, res, next) => {
         store.push(api);
       }
     }
+    store.sort((a, b) => a.order - b.order);
     console.log('========= store\n', store);
     res.json({ code: 0, msg: 'ok' });
   } catch (e) {

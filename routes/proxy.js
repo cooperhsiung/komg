@@ -19,6 +19,7 @@ proxy.on('proxyReq', (proxyReq, req, res, options) => {
 });
 
 proxy.on('error', async (err, req, res) => {
+  console.log('========= err', err);
   try {
     if (req.headers['x-name'] !== 'root') {
       _.find(
@@ -36,35 +37,67 @@ proxy.on('error', async (err, req, res) => {
   res.end('internal server error'.toUpperCase());
 });
 
-let env = 'dev';
+let env = process.env.NODE_ENV || 'dev';
 // console.log(_.sortBy(store,e=>e.order));
 
-_.sortBy(store, e => -e.order).forEach(api => {
-  // console.log(api);
-  router.use(api.path, (req, res) => {
-    // let stime = Date.now();
-    // console.log('========= stime', stime);
-    if (
-      env !== 'prod' ||
-      (api.consumers.length === 1 && api.consumers[0] === 'All') ||
-      api.consumers.includes(req.headers.apikey)
-    ) {
-      let item = _.sample(_.filter(api.targets, e => e.weight > 0));
-      if (item) {
-        let target = item.url;
-        // let target = api.targets[0].address
-        // console.log('========= api', api);
-        console.log('--name--', api.name);
-        req.headers['x-name'] = api.name;
-        req.headers['x-target'] = target;
-        proxy.web(req, res, { target });
+router.use('/:path', (req, res, next) => {
+  for (const api of store) {
+    console.log('========= name\n', api.name);
+    if (api.name === req.params.path) {
+      if (
+        env !== 'prod' ||
+        (api.consumers.length === 1 && api.consumers[0] === 'All') ||
+        api.consumers.includes(req.headers.apikey)
+      ) {
+        let item = _.sample(_.filter(api.targets, e => e.weight > 0));
+        if (item) {
+          let target = item.url;
+          // let target = api.targets[0].address
+          // console.log('========= api', api);
+          console.log('--name--', api.name);
+          req.headers['x-name'] = api.name;
+          req.headers['x-target'] = target;
+          proxy.web(req, res, { target });
+        } else {
+          res.status(500).send('internal server error'.toUpperCase());
+        }
       } else {
-        res.status(500).send('internal server error'.toUpperCase());
+        res.status(500).send('apikey is required');
       }
-    } else {
-      res.status(500).send('apikey is required');
+      return;
     }
-  });
+  }
+
+  console.log('go next ..');
+  next();
 });
+
+// _.sortBy(store, e => -e.order).forEach(api => {
+//   // console.log(api);
+//   router.use(api.path, (req, res) => {
+//     // let stime = Date.now();
+//     // console.log('========= stime', stime);
+//     if (
+//       env !== 'prod' ||
+//       (api.consumers.length === 1 && api.consumers[0] === 'All') ||
+//       api.consumers.includes(req.headers.apikey)
+//     ) {
+//       let item = _.sample(_.filter(api.targets, e => e.weight > 0));
+//       if (item) {
+//         let target = item.url;
+//         // let target = api.targets[0].address
+//         // console.log('========= api', api);
+//         console.log('--name--', api.name);
+//         req.headers['x-name'] = api.name;
+//         req.headers['x-target'] = target;
+//         proxy.web(req, res, { target });
+//       } else {
+//         res.status(500).send('internal server error'.toUpperCase());
+//       }
+//     } else {
+//       res.status(500).send('apikey is required');
+//     }
+//   });
+// });
 
 module.exports = router;

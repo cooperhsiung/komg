@@ -1,7 +1,7 @@
 {
   "komg": [
     {
-      "order": 2,
+      "order": 1,
       "consumers": [
         {
           "apikey": "11111",
@@ -24,6 +24,100 @@
       "name": "test"
     },
     {
+      "name": "test3",
+      "path": "/test3d",
+      "targets": [
+        {
+          "url": "http://localhost:3002",
+          "weight": 2,
+          "status": 1
+        }
+      ],
+      "consumers": [
+        {
+          "apikey": "asdfadsfasdfsdf",
+          "status": 1
+        }
+      ],
+      "order": 2
+    },
+    {
+      "name": "test6",
+      "path": "/test6",
+      "targets": [
+        {
+          "url": "https://localhost:3002",
+          "weight": 1,
+          "status": 1
+        }
+      ],
+      "consumers": [
+        {
+          "apikey": "sdfdsgfsfg",
+          "status": 1
+        }
+      ],
+      "order": 2
+    },
+    {
+      "name": "db",
+      "path": "/db",
+      "targets": [
+        {
+          "url": "http://localhost:2351",
+          "weight": 1,
+          "status": 1
+        }
+      ],
+      "consumers": [
+        {
+          "apikey": "All",
+          "status": 1
+        }
+      ],
+      "order": 2
+    },
+    {
+      "name": "test7",
+      "path": "/sdgsdfg",
+      "targets": [
+        {
+          "url": "https://localhost:3002",
+          "weight": 1,
+          "status": 1
+        }
+      ],
+      "consumers": [
+        {
+          "apikey": "asdsdfg",
+          "status": 1
+        }
+      ],
+      "order": 4
+    },
+    {
+      "name": "test4",
+      "path": "/test4",
+      "targets": [
+        {
+          "url": "https://localhost:3002",
+          "weight": 1,
+          "status": 1
+        }
+      ],
+      "consumers": [
+        {
+          "apikey": "wqerweert",
+          "status": 1
+        },
+        {
+          "apikey": "sfsdfasdfadf",
+          "status": 1
+        }
+      ],
+      "order": 5
+    },
+    {
       "name": "test2",
       "path": "/test3",
       "targets": [
@@ -44,47 +138,7 @@
           "status": 1
         }
       ],
-      "order": 2
-    },
-    {
-      "name": "test3",
-      "path": "/test3d",
-      "targets": [
-        {
-          "url": "http://localhost:3002",
-          "weight": 2,
-          "status": 1
-        }
-      ],
-      "consumers": [
-        {
-          "apikey": "asdfadsfasdfsdf",
-          "status": 1
-        }
-      ],
-      "order": 2
-    },
-    {
-      "name": "test4",
-      "path": "/test4",
-      "targets": [
-        {
-          "url": "https://localhost:3002",
-          "weight": 1,
-          "status": 1
-        }
-      ],
-      "consumers": [
-        {
-          "apikey": "wqerweert",
-          "status": 1
-        },
-        {
-          "apikey": "sfsdfasdfadf",
-          "status": 0
-        }
-      ],
-      "order": 2
+      "order": 6
     }
   ]
 }

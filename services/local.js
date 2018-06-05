@@ -6,7 +6,7 @@ const FileSync = require('lowdb/adapters/FileSync');
 const path = require('path');
 const adapter = new FileSync(path.resolve(__dirname, 'db.json'));
 const db = low(adapter).get('komg');
-let store = db.value();
+let store = db.value().sort((a, b) => a.order - b.order);
 
 const schema = {
   name: { type: 'string' },
