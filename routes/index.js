@@ -1,5 +1,3 @@
-const userRouter = require('./user');
-const apiRouter = require('./admin');
+const adminRouter = require('./admin');
 const proxyRouter = require('./proxy');
-console.log('user api proxy');
-module.exports = { userRouter, apiRouter, proxyRouter };
+module.exports = { adminRouter, proxyRouter };

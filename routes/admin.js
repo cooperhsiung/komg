@@ -1,89 +1,77 @@
 const { Router } = require('express');
 const router = Router();
 const _ = require('lodash');
-const Api = require('../services/model');
-let store = require('../services/local').store;
-
-console.log('===', store, '====');
+let { store, db, schema } = require('../services/local');
+const cjv = require('cjv');
+console.log('========= init store', store);
 
 router.get('/', (req, res, next) => {
-  (async () => {
-    let ret = await Api.find();
-    res.render('index', { title: 'Hey', data: ret });
-  })().catch(err => {
-    res.json(err);
-  });
+  try {
+    res.render('index', { title: 'Hey', data: store });
+  } catch (e) {
+    res.status(e.status || 500).send(e.message || e);
+  }
 });
 
 router.get('/query', (req, res, next) => {
-  (async () => {
-    if (typeof store.then === 'function') {
-      console.log('========= await');
-      store = await store;
-    }
-    res.send(store);
-  })().catch(err => {
-    res.json(err);
-  });
+  try {
+    const { name } = req.query;
+    res.json(db.find({ name }).value());
+  } catch (e) {
+    res.status(e.status || 500).send(e.message || e);
+  }
 });
 
 router.post('/save', (req, res, next) => {
-  (async () => {
-    let api = await Api.findOne({ _id: req.body.name });
-    let ret;
-    if (!api) {
-      ret = await Api.create(Object.assign({ _id: req.body.name }, req.body));
+  try {
+    const { name } = req.body;
+    cjv(schema, req.body);
+    let api = db.find({ name }).value();
+    if (api) {
+      db
+        .find({ name })
+        .assign(req.body)
+        .write();
     } else {
-      merge(api, req.body);
+      db.push(req.body).write();
     }
-    ret = await api.save();
-    res.json(ret);
-  })().catch(err => {
-    res.json(err);
-  });
-  // for validation when upsert
-  function merge(api, body) {
-    api.name = body.name;
-    api.path = body.path;
-    api.targets = body.targets;
-    api.consumers = body.consumers;
-    api.order = body.order;
+    res.json({ code: 0, msg: 'ok' });
+  } catch (e) {
+    res.status(e.status || 500).send(e.message || e);
   }
 });
 
 router.post('/reload', (req, res, next) => {
-  (async () => {
+  try {
     const name = req.query.name || req.body.name;
     if (name === 'all') {
-      store = await Api.find();
+      store = db.value();
     } else {
-      const api = await Api.findOne({ _id: req.body.name });
-      const exist = _.find(store, e => e.name === req.body.name);
+      let api = db.find({ name }).value();
+      const exist = _.find(store, e => e.name === name);
       if (exist) {
         Object.assign(exist, api || {});
       } else if (api) {
         store.push(api);
       }
     }
-    console.log('========= store', store);
-    res.send('ok');
-  })().catch(err => {
-    res.json({ msg: err.message || err });
-  });
+    console.log('========= store\n', store);
+    res.json({ code: 0, msg: 'ok' });
+  } catch (e) {
+    res.status(e.status || 500).send(e.message || e);
+  }
 });
 
 router.post('/remove', (req, res, next) => {
-  (async () => {
-    let api = await Api.findOne({ _id: req.body.name });
-    if (api) {
-      api.remove();
-    }
-    _.remove(store, e => e.name === req.body.name);
-    console.log('========= store', store);
-    res.json('ok');
-  })().catch(err => {
-    res.json(err);
-  });
+  try {
+    let { name } = req.body;
+    db.remove({ name }).write();
+    _.remove(store, e => e.name === name);
+    // console.log('========= store', store);
+    res.json({ code: 0, msg: 'ok' });
+  } catch (e) {
+    res.status(e.status || 500).send(e.message || e);
+  }
 });
 
 module.exports = router;

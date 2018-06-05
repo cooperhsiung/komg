@@ -6,11 +6,30 @@ const FileSync = require('lowdb/adapters/FileSync');
 const path = require('path');
 const adapter = new FileSync(path.resolve(__dirname, 'db.json'));
 const db = low(adapter);
-
 let store = db.get('komg').value();
 
+const schema = {
+  name: { type: 'string' },
+  path: { type: 'string', validate: v => /^\/\S/.test(v) },
+  consumers: [
+    {
+      apikey: { type: 'string' },
+      status: { type: 'number', validate: v => /^(-|)[1|0]$/.test(v) },
+    },
+  ],
+  targets: [
+    {
+      url: { type: 'string', validate: v => /^http(s|):\/\/\S+/.test(v) },
+      weight: { type: 'number' },
+      status: { type: 'number', validate: v => /^(-|)[1|0]$/.test(v) },
+    },
+  ],
+  order: { type: 'number' },
+};
+
 module.exports.store = store;
-module.exports.db = db;
+module.exports.db = db.get('komg');
+module.exports.schema = schema;
 
 // default set
 // db

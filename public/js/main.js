@@ -7,15 +7,15 @@ $(function() {
   $('#sortable').disableSelection();
 
   // collapse direction class
-  $('button[data-toggle="collapse"]').click(function() {
-    if ($(this).hasClass('glyphicon-chevron-up')) {
-      $(this).removeClass('glyphicon-chevron-up');
-      $(this).addClass('glyphicon-chevron-down');
-    } else {
-      $(this).removeClass('glyphicon-chevron-down');
-      $(this).addClass('glyphicon-chevron-up');
-    }
-  });
+  // $('button[data-toggle="collapse"]').click(function() {
+  //   if ($(this).hasClass('glyphicon-chevron-up')) {
+  //     $(this).removeClass('glyphicon-chevron-up');
+  //     $(this).addClass('glyphicon-chevron-down');
+  //   } else {
+  //     $(this).removeClass('glyphicon-chevron-down');
+  //     $(this).addClass('glyphicon-chevron-up');
+  //   }
+  // });
 
   // collapse/expand all
   $('.glyphicon-fullscreen').click(function() {
@@ -23,13 +23,27 @@ $(function() {
     var clps = $('button[data-toggle="collapse"]');
     if ($(this).hasClass('active')) {
       $('.collapse').collapse('show');
-      clps.removeClass('glyphicon-chevron-up');
-      clps.addClass('glyphicon-chevron-down');
-    } else {
-      $('.collapse').collapse('hide');
       clps.removeClass('glyphicon-chevron-down');
       clps.addClass('glyphicon-chevron-up');
+    } else {
+      $('.collapse').collapse('hide');
+      clps.removeClass('glyphicon-chevron-up');
+      clps.addClass('glyphicon-chevron-down');
     }
+  });
+
+  //all reload click
+  $('.navbar .glyphicon-refresh').click(function() {
+    $.ajax({
+      type: 'post',
+      dataType: 'json',
+      url: '/admin/reload',
+      contentType: 'application/json',
+      data: JSON.stringify({ name: 'all' }),
+      success: function(o) {
+        console.log(o);
+      },
+    });
   });
 
   // all save click
@@ -157,6 +171,22 @@ function saveApi($api) {
   });
 }
 
+$('.main').on('click', '.glyphicon-refresh', function() {
+  // console.log('========= yes');
+  let $api = $(this).closest('.api');
+  let name = $api.find('.name b').text() || $api.find('.name input').val();
+  $.ajax({
+    type: 'post',
+    dataType: 'json',
+    url: '/admin/reload',
+    contentType: 'application/json',
+    data: JSON.stringify({ name }),
+    success: function(o) {
+      console.log(o);
+    },
+  });
+});
+
 $('.main').on('click', '.targets .glyphicon-plus-sign', function() {
   const $api = $(this).closest('.api');
   $api.addClass('unsaved');
@@ -205,13 +235,13 @@ $('.main').on('click', '.remove', function() {
 
 $('.main').on('click', 'button[data-toggle="collapse"]', function() {
   const $api = $(this).closest('.api');
-  const $clps = $api.find('button[data-toggle="collapse"]');
-  if ($clps.hasClass('glyphicon-chevron-up')) {
-    $clps.removeClass('glyphicon-chevron-up');
-    $clps.addClass('glyphicon-chevron-down');
+  var clps = $api.find('button[data-toggle="collapse"]');
+  if (clps.hasClass('glyphicon-chevron-down')) {
+    clps.removeClass('glyphicon-chevron-down');
+    clps.addClass('glyphicon-chevron-up');
   } else {
-    $clps.removeClass('glyphicon-chevron-down');
-    $clps.addClass('glyphicon-chevron-up');
+    clps.removeClass('glyphicon-chevron-up');
+    clps.addClass('glyphicon-chevron-down');
   }
 });
 

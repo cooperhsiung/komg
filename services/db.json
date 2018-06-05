@@ -1,7 +1,6 @@
 {
   "komg": [
     {
-      "_id": "test",
       "order": 2,
       "consumers": [
         {
@@ -22,11 +21,9 @@
         }
       ],
       "path": "/test3",
-      "name": "test",
-      "__v": 17
+      "name": "test"
     },
     {
-      "_id": "test2",
       "name": "test2",
       "path": "/test3",
       "targets": [
@@ -47,8 +44,61 @@
           "status": 1
         }
       ],
-      "order": 2,
-      "__v": 0
+      "order": 2
+    },
+    {
+      "name": "test3",
+      "path": "/test3",
+      "targets": [
+        {
+          "url": "http://localhost:3002",
+          "weight": 2,
+          "status": 1
+        }
+      ],
+      "consumers": [
+        {
+          "apikey": "asdfadsfasdfsdf",
+          "status": 1
+        }
+      ],
+      "order": 2
+    },
+    {
+      "name": "test5",
+      "path": "/test5",
+      "targets": [
+        {
+          "url": "http://localhost:3002",
+          "weight": 2,
+          "status": 0
+        }
+      ],
+      "consumers": [
+        {
+          "apikey": "ertwertwert",
+          "status": 1
+        }
+      ],
+      "order": 2
+    },
+    {
+      "name": "test6",
+      "path": "/test6",
+      "targets": [
+        {
+          "url": "https://localhost:3002",
+          "weight": 2,
+          "status": 1
+        }
+      ],
+      "consumers": [
+        {
+          "apikey": "dsgdfgsdfg",
+          "status": 1
+        }
+      ],
+      "order": 2
     }
   ]
 }
