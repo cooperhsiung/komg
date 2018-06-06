@@ -14,7 +14,7 @@ subClient.subscribe('/reload', function() {
 
 router.get('/', (req, res, next) => {
   try {
-    res.render('index', { title: 'Hey', data: store });
+    res.render('index', { title: 'Hey', data: db.get('apis').value() });
   } catch (e) {
     res.status(e.status || 500).send(e.message || e);
   }
@@ -64,6 +64,7 @@ router.post('/save', (req, res, next) => {
           .write();
       }
     }
+    console.log('========= save\n', store);
     res.json({ code: 0, msg: 'ok' });
   } catch (e) {
     res.status(e.status || 500).send(e.message || e);

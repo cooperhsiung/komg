@@ -38,7 +38,6 @@ $(function() {
   // all save click
   $('.node .glyphicon-inbox').click(function() {
     let apis = [];
-
     $('.api').each(function() {
       let name =
         $(this)

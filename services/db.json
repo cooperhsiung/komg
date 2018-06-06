@@ -60,22 +60,40 @@
       "order": 2
     },
     {
-      "name": "test4",
-      "path": "/test4",
+      "name": "db",
+      "path": "/db2",
       "targets": [
         {
-          "url": "http://localhost:2350",
+          "url": "http://localhost:2352",
           "weight": 1,
           "status": 1
         }
       ],
       "consumers": [
         {
-          "apikey": "asdfadsfdaf",
+          "apikey": "sdfdfgdf",
           "status": 1
         }
       ],
-      "order": 7
+      "order": 4
+    },
+    {
+      "name": "ab",
+      "path": "/ab",
+      "targets": [
+        {
+          "url": "http://localhost:2352",
+          "weight": 1,
+          "status": 1
+        }
+      ],
+      "consumers": [
+        {
+          "apikey": "adfsdfadsf",
+          "status": 1
+        }
+      ],
+      "order": 5
     }
   ],
   "nodes": [

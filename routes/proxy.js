@@ -42,8 +42,9 @@ let env = process.env.NODE_ENV || 'dev';
 
 router.use('/:path', (req, res, next) => {
   for (const api of store) {
-    console.log('========= name\n', api.name);
-    if (api.name === req.params.path) {
+    // console.log('========= name', api.name);
+    console.log('========= path', api.path);
+    if (api.path === '/' + req.params.path) {
       if (
         env !== 'prod' ||
         (api.consumers.length === 1 && api.consumers[0] === 'All') ||

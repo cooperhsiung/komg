@@ -8,6 +8,7 @@ const adapter = new FileSync(path.resolve(__dirname, 'db.json'));
 const db = low(adapter);
 let store = db
   .get('apis')
+  .cloneDeep()
   .value()
   .sort((a, b) => a.order - b.order);
 
