@@ -1,6 +1,5 @@
 const path = require('path');
 const express = require('express');
-const cors = require('cors');
 const bodyParser = require('body-parser');
 const { createServer } = require('http');
 
@@ -19,9 +18,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
-if (process.env.NODE_ENV !== 'prod') {
-  app.use(cors());
-}
 
 app.use((req, res, next) => {
   console.log(req.url);

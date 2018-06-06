@@ -1,9 +1,9 @@
 /**
  * Created by Cooper on 2018/6/3.
  */
+const path = require('path');
 const low = require('lowdb');
 const FileSync = require('lowdb/adapters/FileSync');
-const path = require('path');
 const adapter = new FileSync(path.resolve(__dirname, 'db.json'));
 const db = low(adapter);
 let store = db
@@ -30,11 +30,7 @@ const schema = {
   order: { type: 'number' },
 };
 
-module.exports.store = store;
-module.exports.db = db.get('apis');
-module.exports.low = low(adapter);
-module.exports.nodes = db.get('nodes').value();
-module.exports.schema = schema;
+module.exports = { db, store, schema };
 
 // default set
 // db

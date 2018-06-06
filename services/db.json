@@ -42,8 +42,8 @@
       "order": 2
     },
     {
-      "name": "test4",
-      "path": "/test5",
+      "name": "test2",
+      "path": "/test2",
       "targets": [
         {
           "url": "https://localhost:3002",
@@ -53,15 +53,29 @@
       ],
       "consumers": [
         {
-          "apikey": "wqerweert",
-          "status": 1
-        },
-        {
-          "apikey": "sfsdfasdfadf",
+          "apikey": "sdfsdfgfg",
           "status": 1
         }
       ],
-      "order": 5
+      "order": 2
+    },
+    {
+      "name": "test4",
+      "path": "/test4",
+      "targets": [
+        {
+          "url": "http://localhost:2350",
+          "weight": 1,
+          "status": 1
+        }
+      ],
+      "consumers": [
+        {
+          "apikey": "asdfadsfdaf",
+          "status": 1
+        }
+      ],
+      "order": 7
     }
   ],
   "nodes": [
