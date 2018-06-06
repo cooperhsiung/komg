@@ -1,7 +1,8 @@
 const { Router } = require('express');
 const router = Router();
-const _ = require('lodash');
 const cjv = require('cjv');
+const _ = require('lodash');
+const parseUrl = require('url').parse;
 let { store, db, schema } = require('../services/local');
 
 const subClient = require('../services/sub_client');
@@ -14,7 +15,15 @@ subClient.subscribe('/reload', function() {
 
 router.get('/', (req, res, next) => {
   try {
-    res.render('index', { title: 'Hey', data: db.get('apis').value() });
+    let nodes = db.get('nodes').value();
+    nodes = nodes.map(node => parseUrl(node).host).reduce((s, e) => (s === '' ? e : s + ', ' + e), '');
+    res.render('index', {
+      nodes,
+      data: db
+        .get('apis')
+        .value()
+        .sort((a, b) => a.order - b.order),
+    });
   } catch (e) {
     res.status(e.status || 500).send(e.message || e);
   }

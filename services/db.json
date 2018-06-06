@@ -2,10 +2,10 @@
   "apis": [
     {
       "name": "test",
-      "path": "/test11",
+      "path": "/test1",
       "targets": [
         {
-          "url": "https://localhost:3002",
+          "url": "https://localhost:3001",
           "weight": 1,
           "status": 1
         },
@@ -17,29 +17,11 @@
       ],
       "consumers": [
         {
-          "apikey": "11111",
+          "apikey": "as6gsdf7sdf98a",
           "status": 1
         }
       ],
       "order": 1
-    },
-    {
-      "name": "test3",
-      "path": "/test3d",
-      "targets": [
-        {
-          "url": "http://localhost:3002",
-          "weight": 2,
-          "status": 1
-        }
-      ],
-      "consumers": [
-        {
-          "apikey": "asdfadsfasdfsdf",
-          "status": 1
-        }
-      ],
-      "order": 2
     },
     {
       "name": "test2",
@@ -60,44 +42,26 @@
       "order": 2
     },
     {
-      "name": "db",
-      "path": "/db2",
+      "name": "test3",
+      "path": "/test3",
       "targets": [
         {
-          "url": "http://localhost:2352",
-          "weight": 1,
+          "url": "http://localhost:3002",
+          "weight": 2,
           "status": 1
         }
       ],
       "consumers": [
         {
-          "apikey": "sdfdfgdf",
+          "apikey": "asdfadsfasdfsdf",
           "status": 1
         }
       ],
-      "order": 4
-    },
-    {
-      "name": "ab",
-      "path": "/ab",
-      "targets": [
-        {
-          "url": "http://localhost:2352",
-          "weight": 1,
-          "status": 1
-        }
-      ],
-      "consumers": [
-        {
-          "apikey": "adfsdfadsf",
-          "status": 1
-        }
-      ],
-      "order": 5
+      "order": 3
     }
   ],
   "nodes": [
-    "http://localhost:2350",
-    "http://localhost:2351"
+    "http://127.0.0.1:2350",
+    "http://127.0.0.2:2350"
   ]
 }

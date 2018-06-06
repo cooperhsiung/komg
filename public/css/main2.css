@@ -344,3 +344,8 @@ select {
     color: #FF3333;
 }
 
+
+footer {
+    margin-top: 200px;
+    text-align: center;
+}

@@ -155,6 +155,10 @@ $main.on('click', '.glyphicon-pencil', function() {
     $api.find('input').removeAttr('disabled'); //enable
     $api.find('select').removeAttr('disabled'); //enable
     $api.find('input').addClass('editable');
+
+    var clps = $api.find('button[data-toggle="collapse"]');
+    clps.removeClass('glyphicon-chevron-down');
+    clps.addClass('glyphicon-chevron-up');
   } else {
     $api.find('.remove').hide();
     $api.find('li .col-md-1').hide();
