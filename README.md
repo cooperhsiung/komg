@@ -1,5 +1,7 @@
 # komg
 
+[![NPM Version][npm-image]][npm-url]
+
 a mini kong, lightweight microservices manager.
 
 coding ... (ง๑ •̀_•́)ง
@@ -31,3 +33,7 @@ node app.js
 
  - asdfg
  - zxcvb
+
+
+[npm-image]: https://img.shields.io/npm/v/komg.svg
+[npm-url]: https://www.npmjs.com/package/komg
