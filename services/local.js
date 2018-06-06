@@ -35,8 +35,8 @@ module.exports.schema = schema;
 // db
 //   .set('komg', [
 //     {
-//       _id: 'test',
-//       order: 2,
+//       name: 'test',
+//       path: '/test678',
 //       consumers: [
 //         {
 //           apikey: 'adfgdfgdfgdfgdfg',
@@ -55,8 +55,7 @@ module.exports.schema = schema;
 //           status: 1,
 //         },
 //       ],
-//       path: '/test678',
-//       name: 'test',
+//       order: 2,
 //     },
 //   ])
 //   .write();

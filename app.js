@@ -3,7 +3,8 @@ const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const { createServer } = require('http');
-const { adminRouter, proxyRouter } = require('./routes');
+const adminRouter = require('./routes/admin');
+const proxyRouter = require('./routes/proxy');
 
 const app = express();
 
