@@ -37,10 +37,83 @@ $(function() {
 
   // all save click
   $('.node .glyphicon-inbox').click(function() {
+    let apis = [];
+
     $('.api').each(function() {
-      if ($(this).hasClass('unsaved')) {
-        saveApi($(this));
+      let name =
+        $(this)
+          .find('.name b')
+          .text() ||
+        $(this)
+          .find('.name input')
+          .val();
+      let path = $(this)
+        .find('.path input')
+        .val();
+
+      let targets = [];
+      $(this)
+        .find('.targets li')
+        .each((i, e) => {
+          if (i > 0) {
+            targets.push({
+              url: $(e)
+                .find('input:nth-child(1)')
+                .val(),
+              weight: Number(
+                $(e)
+                  .find('input:nth-child(2)')
+                  .val(),
+              ),
+              status: Number(
+                $(e)
+                  .find('select')
+                  .val(),
+              ),
+            });
+          }
+        });
+
+      let consumers = [];
+      $(this)
+        .find('.consumers li')
+        .each((i, e) => {
+          if (i > 0) {
+            consumers.push({
+              apikey: $(e)
+                .find('input:nth-child(1)')
+                .val(),
+              status: Number(
+                $(e)
+                  .find('select')
+                  .val(),
+              ),
+            });
+          }
+        });
+
+      let order = Number(
+        $(this)
+          .find('.order input')
+          .val(),
+      );
+
+      if (!$(this).hasClass('add')) {
+        apis.push({ name, path, targets, consumers, order });
       }
+    });
+
+    $.ajax({
+      type: 'post',
+      url: '/admin/save?name=all',
+      data: JSON.stringify(apis),
+      success: function(data) {
+        console.log(data, '====');
+        $('.api').removeClass('unsaved');
+        location.reload();
+      },
+      contentType: 'application/json',
+      dataType: 'json',
     });
   });
 

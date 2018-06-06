@@ -3,6 +3,10 @@ const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const { createServer } = require('http');
+
+const faye = require('faye');
+const bayeux = new faye.NodeAdapter({ mount: '/admin/faye' });
+
 const adminRouter = require('./routes/admin');
 const proxyRouter = require('./routes/proxy');
 
@@ -29,6 +33,7 @@ app.use('/admin', adminRouter);
 app.use('/', proxyRouter);
 
 const server = createServer(app);
+bayeux.attach(server);
 const port = process.env.PORT || 2350;
 if (!module.parent) server.listen(port);
 
@@ -40,4 +45,5 @@ server.on('listening', () => {
   console.log(`env:${process.env.NODE_ENV},listening on ${port} ..`);
 });
 
+require('./services/sub_client');
 module.exports = server;

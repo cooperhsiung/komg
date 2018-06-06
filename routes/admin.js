@@ -5,6 +5,16 @@ let { store, db, schema } = require('../services/local');
 const cjv = require('cjv');
 console.log('========= init store\n', store);
 
+const pubClients = require('../services/pub_client');
+const subClient = require('../services/sub_client');
+
+subClient.subscribe('/reload', function() {
+  store = low.get('apis').value();
+  console.log('========= store', store);
+});
+
+console.log('subscribe..');
+
 router.get('/', (req, res, next) => {
   try {
     res.render('index', { title: 'Hey', data: store });
@@ -24,16 +34,26 @@ router.get('/query', (req, res, next) => {
 
 router.post('/save', (req, res, next) => {
   try {
-    const { name } = req.body;
-    cjv(schema, req.body);
-    let api = db.find({ name }).value();
-    if (api) {
-      db
-        .find({ name })
-        .assign(req.body)
-        .write();
+    const name = req.query.name || req.body.name;
+    if (name === 'all') {
+      console.log('========= req.body', req.body);
+      for (let api of req.body) {
+        cjv(schema, api);
+      }
+      pubClients.forEach(client => {
+        client.publish('/save', req.body);
+      });
     } else {
-      db.push(req.body).write();
+      cjv(schema, req.body);
+      let api = db.find({ name }).value();
+      if (api) {
+        db
+          .find({ name })
+          .assign(req.body)
+          .write();
+      } else {
+        db.push(req.body).write();
+      }
     }
     res.json({ code: 0, msg: 'ok' });
   } catch (e) {
@@ -45,8 +65,14 @@ router.post('/reload', (req, res, next) => {
   try {
     const name = req.query.name || req.body.name;
     if (name === 'all') {
-      store = db.value();
+      // store = db.value();
+      pubClients.forEach(client => {
+        client.publish('/reload', {
+          text: 'hello reload',
+        });
+      });
     } else {
+      console.log('========= db.value()', db.value());
       let api = db.find({ name }).value();
       const exist = _.find(store, e => e.name === name);
       if (exist) {

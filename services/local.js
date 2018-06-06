@@ -5,8 +5,11 @@ const low = require('lowdb');
 const FileSync = require('lowdb/adapters/FileSync');
 const path = require('path');
 const adapter = new FileSync(path.resolve(__dirname, 'db.json'));
-const db = low(adapter).get('komg');
-let store = db.value().sort((a, b) => a.order - b.order);
+const db = low(adapter);
+let store = db
+  .get('apis')
+  .value()
+  .sort((a, b) => a.order - b.order);
 
 const schema = {
   name: { type: 'string' },
@@ -28,12 +31,14 @@ const schema = {
 };
 
 module.exports.store = store;
-module.exports.db = db;
+module.exports.db = db.get('apis');
+module.exports.low = low(adapter);
+module.exports.nodes = db.get('nodes').value();
 module.exports.schema = schema;
 
 // default set
 // db
-//   .set('komg', [
+//   .set('apis', [
 //     {
 //       name: 'test',
 //       path: '/test678',
@@ -59,3 +64,5 @@ module.exports.schema = schema;
 //     },
 //   ])
 //   .write();
+
+// db.set('nodes', ['http://localhost:2350', 'http://localhost:2351']).write();
