@@ -11,7 +11,7 @@ program
   .parse(process.argv);
 
 const port = (process.env.PORT = program.port || 2350);
-const nodes = program.nodes || 'localhost:' + port;
+const nodes = program.nodes.split(',') || 'localhost:' + port;
 const basicAuth = program.basicAuth;
 
 db.set('nodes', nodes).write();
