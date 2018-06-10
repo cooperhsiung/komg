@@ -41,56 +41,57 @@ then open http://localhost:2350/admin with your browser
  - --nodes, if you deploy more than one komg, add this to synchronize the api's config
  - --basic-auth, add a basic authorization for admin ui
  
- 
- ## Usage
+
+## Usage
  
  - 1.if you add a api like this
  
  ```json
-  {
-       "name": "test",
-       "path": "/test",
-       "targets": [
-         {
-           "url": "http://localhost:3001",
-           "weight": 1,
-           "status": 1
-         }
-       ],
-       "consumers": [
-         {
-           "apikey": "All",
-           "status": 1
-         }
-       ],
-       "order": 1
+{
+   "name": "test",
+   "path": "/test",
+   "targets": [
+     {
+       "url": "http://localhost:3001",
+       "weight": 1,
+       "status": 1
+     }
+   ],
+   "consumers": [
+     {
+       "apikey": "All",
+       "status": 1
+     }
+   ],
+   "order": 1
 }
  ``` 
 
 your request to `http://localhost:2350/test` will be proxy to `http://localhost:3001`
 
  - 2.if you add a api like this
- 
+
  ```json
-  {
-       "name": "test2",
-       "path": "/test2",
-       "targets": [
-         {
-           "url": "http://localhost:3002",
-           "weight": 1,
-           "status": 1
-         }
-       ],
-       "consumers": [
-         {
-           "apikey": "adsf1324asdfg",
-           "status": 1
-         }
-       ],
-       "order": 1
+{
+   "name": "test2",
+   "path": "/test2",
+   "targets": [
+     {
+       "url": "http://localhost:3002",
+       "weight": 1,
+       "status": 1
+     }
+   ],
+   "consumers": [
+     {
+       "apikey": "adsf1324asdfg",
+       "status": 1
+     }
+   ],
+   "order": 1
 }
  ``` 
+ 
 your request to `http://localhost:2350/test2` will be asked a apikey in the headers, like this headers:{Content-Type:'application/json',apikey:'adsf1324asdfg'}
 
 
