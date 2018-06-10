@@ -1,8 +1,11 @@
 {
   "name": "komg",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "a mini kong",
-  "main": "app.js",
+  "main": "./lib/server.js",
+  "bin": {
+    "komg": "./bin/komg.js"
+  },
   "scripts": {
     "start": "set NODE_ENV=dev&node ./app.js",
     "start:test": "NODE_ENV=test node ./app.js",
@@ -22,7 +25,9 @@
   },
   "homepage": "https://github.com/cooperhsiung/komg#README",
   "dependencies": {
+    "basic-auth": "^2.0.0",
     "cjv": "^1.0.3",
+    "commander": "^2.15.1",
     "express": "^4.16.3",
     "faye": "^1.2.4",
     "http-proxy": "^1.17.0",

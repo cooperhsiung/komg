@@ -2,7 +2,7 @@
   "apis": [
     {
       "name": "test",
-      "path": "/test1",
+      "path": "/test1rt",
       "targets": [
         {
           "url": "https://localhost:3001",
@@ -43,7 +43,7 @@
     },
     {
       "name": "test3",
-      "path": "/test3",
+      "path": "/test4",
       "targets": [
         {
           "url": "http://localhost:3002",

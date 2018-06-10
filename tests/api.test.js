@@ -1,4 +1,4 @@
-const app = require('../app');
+const app = require('../lib/server');
 const supertest = require('supertest');
 
 describe('GET /api', () => {

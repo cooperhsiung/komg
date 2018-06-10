@@ -9,7 +9,7 @@ coding ... (ง๑ •̀_•́)ง
 
 ## Admin UI
 
-![admin](./1.png)
+![admin](ui.png)
 
 ## start
 
