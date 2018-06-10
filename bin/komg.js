@@ -1,6 +1,4 @@
-/**
- * Created by Cooper on 2018/6/10.
- */
+#!/usr/bin/env node
 const program = require('commander');
 const server = require('../lib/server');
 const db = require('../lib/local').db;
