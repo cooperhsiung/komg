@@ -1,6 +1,5 @@
 #!/usr/bin/env node
 const program = require('commander');
-const server = require('../lib/server');
 const db = require('../lib/local').db;
 
 program
@@ -11,14 +10,8 @@ program
   .parse(process.argv);
 
 const port = (process.env.PORT = program.port || 2350);
-const nodes = program.nodes.split(',') || 'localhost:' + port;
+const nodes = program.nodes ? program.nodes.split(',') : ['localhost:' + port];
 const basicAuth = program.basicAuth;
 
 db.set('nodes', nodes).write();
-server.start({ port, basicAuth });
-
-// module.exports = { nodes, basicAuth };
-
-// if (program.port) {
-//     console.log();
-// }
+require('../lib/server').start({ port, basicAuth });

@@ -17,7 +17,11 @@
     "type": "git",
     "url": "git+https://github.com/cooperhsiung/komg.git"
   },
-  "keywords": ["komg", "kong", "microservice"],
+  "keywords": [
+    "komg",
+    "kong",
+    "microservice"
+  ],
   "author": "Cooper Xiong",
   "license": "MIT",
   "bugs": {
