@@ -27,7 +27,7 @@ komg
 
 or
 
-komg --port=2350 --env=prod --redis=redis://127.0.0.1:6379/0 --basic-auth=name1=pass1
+komg --port=2350 --db=./db.json --env=prod --redis=redis://127.0.0.1:6379/0 --basic-auth=name1=pass1
 
 ```
 
@@ -37,6 +37,7 @@ then open http://localhost:2350/admin with your browser
 ## Argv
 
  - -p/--port, set port for http server, default 2350
+ - --db, set db path, default $komg/lib/db_test.json
  - --env, dev/prod, default dev(allow all requests without apikey)
  - --redis, redis url
  - --basic-auth, add a basic authorization for admin

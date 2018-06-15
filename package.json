@@ -1,6 +1,6 @@
 {
   "name": "komg",
-  "version": "2.0.3",
+  "version": "2.0.4",
   "description": "a mini kong",
   "main": "./lib/server.js",
   "engines": {
