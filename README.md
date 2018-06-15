@@ -27,19 +27,19 @@ komg
 
 or
 
-komg -p 2350 --nodes 172.0.0.1:2350,172.0.0.2:2350 --basic-auth=name1=pass1
+komg --port=2350 --env=prod --redis=redis://127.0.0.1:6379/0 --basic-auth=name1=pass1
 
 ```
 
 then open http://localhost:2350/admin with your browser
 
 
-
 ## Argv
 
  - -p/--port, set port for http server, default 2350
- - --nodes, if you deploy more than one komg, add this to synchronize the api's config
- - --basic-auth, add a basic authorization for admin ui
+ - --env, dev/prod, default dev(allow all requests without apikey)
+ - --redis, redis url
+ - --basic-auth, add a basic authorization for admin
  
 
 ## Usage

@@ -10,7 +10,7 @@ program
   .parse(process.argv);
 
 process.env.PORT = program.port || 2350;
-process.env.NODE_ENV = program.port || 'dev';
+process.env.NODE_ENV = program.env || 'dev';
 process.env.REDIS = program.redis || 'redis://127.0.0.1:6379/0';
 
 require('../lib/server').start({ basicAuth: program.basicAuth });
