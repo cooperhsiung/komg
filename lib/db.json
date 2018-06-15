@@ -28,7 +28,7 @@
       "path": "/test2",
       "targets": [
         {
-          "url": "https://localhost:3002",
+          "url": "http://localhost:2351",
           "weight": 1,
           "status": 1
         }
@@ -46,9 +46,9 @@
       "path": "/test3",
       "targets": [
         {
-          "url": "http://192.168.1.2:3002",
+          "url": "http://172.19.2.10:3002",
           "weight": 2,
-          "status": -1
+          "status": 1
         }
       ],
       "consumers": [

@@ -1,17 +1,16 @@
 #!/usr/bin/env node
 const program = require('commander');
-const db = require('../lib/local').db;
 
 program
   .version(require('../package.json').version)
   .option('-p, --port <p>', 'set port, default 2350')
-  .option('--nodes <nodes>', 'set nodes, default localhost:2350, eg:172.0.0.1:2350,172.0.0.2:2350')
+  .option('--env <env>', 'set NODE_ENV, default dev, another option prod')
+  .option('--redis <redis>', 'redis url, default redis://127.0.0.1:6379/0')
   .option('--basic-auth <basic-auth>', 'set basic auth, default none, eg:user1=password1')
   .parse(process.argv);
 
-const port = (process.env.PORT = program.port || 2350);
-const nodes = program.nodes ? program.nodes.split(',') : ['localhost:' + port];
-const basicAuth = program.basicAuth;
+process.env.PORT = program.port || 2350;
+process.env.NODE_ENV = program.port || 'dev';
+process.env.REDIS = program.redis || 'redis://127.0.0.1:6379/0';
 
-db.set('nodes', nodes).write();
-require('../lib/server').start({ port, basicAuth });
+require('../lib/server').start({ basicAuth: program.basicAuth });
