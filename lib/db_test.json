@@ -7,7 +7,7 @@
         {
           "url": "https://localhost:3001",
           "weight": 1,
-          "status": 1
+          "status": -1
         },
         {
           "url": "http://localhost:3002",
@@ -58,6 +58,24 @@
         }
       ],
       "order": 3
+    },
+    {
+      "name": "open",
+      "path": "/",
+      "targets": [
+        {
+          "url": "http://127.0.0.1:3002",
+          "weight": 1,
+          "status": 1
+        }
+      ],
+      "consumers": [
+        {
+          "apikey": "All",
+          "status": 1
+        }
+      ],
+      "order": 6
     }
   ]
 }
