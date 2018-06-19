@@ -43,12 +43,12 @@
     },
     {
       "name": "test3",
-      "path": "/test4",
+      "path": "/test4/auth",
       "targets": [
         {
           "url": "http://172.19.2.10:3002",
           "weight": 2,
-          "status": -1
+          "status": 1
         }
       ],
       "consumers": [
@@ -61,7 +61,7 @@
     },
     {
       "name": "open",
-      "path": "/",
+      "path": "/aaa",
       "targets": [
         {
           "url": "http://127.0.0.1:3002",
