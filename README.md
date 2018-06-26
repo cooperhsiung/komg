@@ -4,9 +4,6 @@
 
 a mini kong, lightweight microservices manager.
 
-coding ... (ง๑ •̀_•́)ง
-
-
 ## Admin UI
 
 ![admin](ui.png)
