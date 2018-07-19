@@ -2,7 +2,7 @@
 
 [![NPM Version][npm-image]][npm-url]
 
-a mini kong, lightweight microservices manager.
+a mini [kong](https://konghq.com), lightweight microservices manager.
 
 ## Admin UI
 
