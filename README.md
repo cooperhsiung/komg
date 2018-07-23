@@ -90,7 +90,12 @@ your request to `http://localhost:2350/test` will be proxy to `http://localhost:
 }
  ``` 
  
-your request to `http://localhost:2350/test2` will be asked a apikey in the headers, like this headers:{Content-Type:'application/json',apikey:'adsf1324asdfg'}
+your request to `http://localhost:2350/test2` will ask an apikey in the headers, like this headers:{Content-Type:'application/json',apikey:'adsf1324asdfg'}
+
+
+## Scalable
+
+if you install komg on server A,server B, your change on A will be synchronized to B since a subscriber running on each komg, and you need to press the refresh button to update upstream configs in the memory.
 
 
 [npm-image]: https://img.shields.io/npm/v/komg.svg
