@@ -1,7 +1,7 @@
 {
   "name": "komg",
-  "version": "2.1.7",
-  "description": "a mini kong",
+  "version": "2.1.8",
+  "description": "a mini kong, lightweight microservices manager",
   "main": "./lib/server.js",
   "engines": {
     "node": ">= 7.0.0"

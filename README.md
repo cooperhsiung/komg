@@ -9,7 +9,7 @@ A mini [kong](https://konghq.com), lightweight microservices manager.
 
 ![admin](ui.png)
 
-## Install
+## Installation
 
 Firstly, [Node.js](https://nodejs.org) and [Redis](https://redis.io/) are required.
 
@@ -27,7 +27,7 @@ or
 komg --port=2350 --db=./db.json --env=prod --redis=redis://127.0.0.1:6379/0 --basic-auth=name1=pass1
 ```
 
-then open http://localhost:2350/admin with your browser
+then open http://localhost:2350/admin with your browser.
 
 ## Argv
 
